@@ -29,13 +29,14 @@ class UserController extends Controller
      */
     public function store(Request $request): JsonResponse
     {
+        /** @var array<string, mixed> $validated */
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'confirmed', Password::defaults()],
         ]);
 
-        $validated['password'] = Hash::make($validated['password']);
+        $validated['password'] = Hash::make($request->string('password'));
 
         event(new Registered(($user = User::create($validated))));
 
