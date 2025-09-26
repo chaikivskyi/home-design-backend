@@ -1,0 +1,57 @@
+name: home-design
+services:
+    # PHP Service (Laravel Application)
+    app:
+        build:
+            context: .
+            dockerfile: .docker/php/Dockerfile
+        #    restart: unless-stopped
+        working_dir: /var/www/html
+        volumes:
+            - .:/var/www/html
+            - ./storage:/var/www/html/storage
+        networks:
+            - laravel_network
+        depends_on:
+            - db
+
+    # Nginx Service
+    nginx:
+        image: nginx:alpine
+        ports:
+            - "8080:80"
+        volumes:
+            - .:/var/www/html
+            - ./.docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+        networks:
+            - laravel_network
+        depends_on:
+            - app
+
+    # PostgreSQL Service
+    db:
+        image: postgres:17-alpine
+        restart: unless-stopped
+        environment:
+            POSTGRES_DB: laravel
+            POSTGRES_USER: laravel
+            POSTGRES_PASSWORD: secret
+        volumes:
+            - postgres_data:/var/lib/postgresql/data
+        ports:
+            - "5432:5432"
+        networks:
+            - laravel_network
+    mailpit:
+        image: 'axllent/mailpit:latest'
+        ports:
+            - '${FORWARD_MAILPIT_PORT:-1025}:1025'
+            - '${FORWARD_MAILPIT_DASHBOARD_PORT:-8025}:8025'
+        networks:
+            - laravel_network
+networks:
+    laravel_network:
+        driver: bridge
+
+volumes:
+    postgres_data:
