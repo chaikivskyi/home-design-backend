@@ -42,6 +42,15 @@ services:
             - "5432:5432"
         networks:
             - laravel_network
+    kv:
+        image: valkey/valkey:8
+        restart: unless-stopped
+        volumes:
+            - kv_data:/data
+        ports:
+            - "6379:6379"
+        networks:
+            - laravel_network
     mailpit:
         image: 'axllent/mailpit:latest'
         ports:
@@ -55,3 +64,4 @@ networks:
 
 volumes:
     postgres_data:
+    kv_data:

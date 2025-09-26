@@ -16,6 +16,14 @@ RUN apk add --no-cache \
 # Install PHP extensions
 RUN docker-php-ext-install pdo pdo_pgsql pgsql mbstring intl zip
 
+# Download PIE
+RUN apk add --no-cache $PHPIZE_DEPS linux-headers zstd-dev lz4-dev liblzf-dev
+RUN curl -Lo pie.phar https://github.com/php/pie/releases/latest/download/pie.phar \
+    && chmod +x pie.phar \
+    && mv pie.phar /usr/local/bin/pie
+
+RUN pie install phpredis/phpredis
+
 # Install Composer
 RUN curl -sLS https://getcomposer.org/installer | php -- --install-dir=/usr/bin/ --filename=composer
 

@@ -2,6 +2,10 @@
 
 namespace App\Providers;
 
+use Illuminate\Console\Command;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Schema\Builder;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -19,6 +23,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Model::shouldBeStrict(!$this->app->isProduction());
+        DB::prohibitDestructiveCommands($this->app->isProduction());
+        Builder::defaultMorphKeyType('uuid');
     }
 }
