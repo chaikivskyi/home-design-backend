@@ -8,7 +8,7 @@ class RestrictedDocsAccess
 {
     public function handle($request, Closure $next)
     {
-        if (!app()->isProduction()) {
+        if (! app()->isProduction()) {
             return $next($request);
         }
 

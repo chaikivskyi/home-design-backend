@@ -24,6 +24,7 @@ class UserController extends Controller
 
     /**
      * Register a new user
+     *
      * @unauthenticated
      */
     public function store(Request $request): JsonResponse

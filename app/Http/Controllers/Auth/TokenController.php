@@ -15,6 +15,7 @@ class TokenController extends Controller
 {
     /**
      * Create token for user
+     *
      * @unauthenticated
      */
     public function store(Request $request): JsonResponse
@@ -26,14 +27,14 @@ class TokenController extends Controller
 
         $user = User::where('email', $request->email)->first();
 
-        if (!$user || !Hash::check($request->password, $user->password)) {
+        if (! $user || ! Hash::check($request->password, $user->password)) {
             throw ValidationException::withMessages([
                 'email' => ['The provided credentials are incorrect.'],
             ]);
         }
 
         return response()->json([
-            'access_token' => $user->createToken('test')->plainTextToken
+            'access_token' => $user->createToken('test')->plainTextToken,
         ]);
     }
 }
