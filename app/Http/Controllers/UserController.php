@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\TokenResource;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
@@ -41,6 +42,7 @@ class UserController extends Controller
         event(new Registered(($user = User::create($validated))));
 
         return UserResource::make($user)
+            ->additional(['meta' => ['token' => TokenResource::make($user)]])
             ->response()
             ->setStatusCode(Response::HTTP_CREATED);
     }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\TokenResource;
 use App\Models\User;
 use Dedoc\Scramble\Attributes\Group;
 use Illuminate\Http\JsonResponse;
@@ -14,7 +15,7 @@ use Illuminate\Validation\ValidationException;
 class TokenController extends Controller
 {
     /**
-     * Create token for user
+     * Login user
      *
      * @unauthenticated
      */
@@ -33,8 +34,15 @@ class TokenController extends Controller
             ]);
         }
 
-        return response()->json([
-            'access_token' => $user->createToken('test')->plainTextToken,
-        ]);
+        return TokenResource::make($user)
+            ->response();
+    }
+
+    /**
+     * Logout user
+     */
+    public function destroy(Request $request): void
+    {
+        $request->user()->currentAccessToken()?->delete();
     }
 }
