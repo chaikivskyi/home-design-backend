@@ -42,6 +42,12 @@ return new class extends Migration
         DB::table('color_palettes')->whereIn('slug', $slugs)->delete();
     }
 
+    /**
+     * @return array<int, array{
+     *      name: string,
+     *      swatches: array<int, array{name: string, hex: string}>
+     *  }>
+     */
     private function getPalettes(): array
     {
         return [

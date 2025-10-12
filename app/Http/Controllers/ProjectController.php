@@ -23,10 +23,10 @@ class ProjectController extends Controller
 
         $path = $request
             ->file('image')
-            ?->store('projects/'.$request->user()->id, 'public');
+            ?->store('projects/'.$request->user()?->id, 'public');
 
         $project = Project::create([
-            'user_id' => $request->user()->id,
+            'user_id' => $request->user()?->id,
             'image' => $path,
             'style_id' => $request->style_id,
             'palette_id' => $request->palette_id,
@@ -57,6 +57,9 @@ class ProjectController extends Controller
 
         $presenceRule = $request->isMethod(Request::METHOD_PUT) ? 'required' : 'sometimes';
 
+        /**
+         * @var array<string, mixed>
+         */
         $data = $request->validate([
             'style_id' => [$presenceRule, 'nullable', 'uuid', 'exists:design_styles,id'],
             'palette_id' => [$presenceRule, 'nullable', 'uuid', 'exists:color_palettes,id'],

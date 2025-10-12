@@ -39,6 +39,9 @@ return new class extends Migration
         DB::table('design_styles')->whereIn('slug', $slugs)->delete();
     }
 
+    /**
+     * @return array<array{name: string, image: string}>
+     */
     private function getStyles(): array
     {
         return [

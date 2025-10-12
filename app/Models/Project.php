@@ -7,7 +7,6 @@ use App\Models\Project\DesignStyle;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
- * @property string $id
  * @property string $user_id
  * @property string $image
  * @property ?string $style_id
@@ -34,7 +33,7 @@ class Project extends Model
     }
 
     /**
-     * @return BelongsTo<ColorPalette, $this>
+     * @return BelongsTo<DesignStyle, $this>
      */
     public function style(): BelongsTo
     {
