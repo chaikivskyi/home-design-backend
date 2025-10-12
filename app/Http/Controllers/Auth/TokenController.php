@@ -43,6 +43,6 @@ class TokenController extends Controller
      */
     public function destroy(Request $request): void
     {
-        $request->user()->currentAccessToken()?->delete();
+        $request->user()->currentAccessToken()->delete();
     }
 }

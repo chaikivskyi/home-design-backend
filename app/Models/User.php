@@ -44,7 +44,7 @@ class User extends Authenticatable
     {
         parent::boot();
         self::creating(function (self $user) {
-            $user->id = $user->newUniqueId();
+            $user->id ??= $user->newUniqueId();
         });
     }
 
