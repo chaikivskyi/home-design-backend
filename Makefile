@@ -1,2 +1,2 @@
 shell:
-	@docker-compose exec app sh
+	@docker compose exec app sh
