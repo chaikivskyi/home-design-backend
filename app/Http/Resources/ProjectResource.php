@@ -18,7 +18,7 @@ class ProjectResource extends JsonResource
     {
         return [
             'id' => $this->resource->id,
-            'image' => $this->resource->image,
+            'image_url' => $this->resource->image_url,
             'style_id' => $this->resource->style_id,
             'palette_id' => $this->resource->palette_id,
         ];

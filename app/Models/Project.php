@@ -4,13 +4,16 @@ namespace App\Models;
 
 use App\Models\Project\ColorPalette;
 use App\Models\Project\DesignStyle;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * @property string $user_id
  * @property string $image
  * @property ?string $style_id
  * @property ?string $palette_id
+ * @property-read string $image_url
  * @property-read User $user
  * @property-read ?DesignStyle $style
  * @property-read ?ColorPalette $palette
@@ -23,6 +26,11 @@ class Project extends Model
         'style_id',
         'palette_id',
     ];
+
+    public function imageUrl(): Attribute
+    {
+        return Attribute::get(fn() => Storage::url($this->image));
+    }
 
     /**
      * @return BelongsTo<User, $this>
