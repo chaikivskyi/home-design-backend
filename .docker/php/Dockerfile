@@ -1,4 +1,4 @@
-FROM php:8.4-fpm-alpine
+FROM php:8.5-fpm-alpine
 
 # Install system dependencies
 RUN apk add --no-cache \
@@ -34,7 +34,5 @@ WORKDIR /var/www/html
 RUN echo "catch_workers_output = no" >> /usr/local/etc/php-fpm.conf
 RUN echo "php_admin_flag[log_errors] = On" >> /usr/local/etc/php-fpm.conf
 RUN echo "php_admin_value[error_log] = /dev/stderr" >> /usr/local/etc/php-fpm.conf
-
-RUN rm -rf /var/cache/apk/*
 
 CMD ["php-fpm"]
