@@ -3,12 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
-use Illuminate\Database\Eloquent\Model as EloqentModel;
+use Illuminate\Database\Eloquent\Model as EloquentModel;
 
 /**
  * @property string $id
  */
-class Model extends EloqentModel
+class Model extends EloquentModel
 {
     use HasUuids;
 
