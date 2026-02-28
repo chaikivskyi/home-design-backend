@@ -14,7 +14,7 @@ RUN apk add --no-cache \
     su-exec
 
 # Install PHP extensions
-RUN docker-php-ext-install pdo pdo_pgsql pgsql mbstring intl zip
+RUN docker-php-ext-install pdo pdo_pgsql pgsql mbstring intl zip pcntl
 
 # Download PIE
 RUN apk add --no-cache $PHPIZE_DEPS linux-headers zstd-dev lz4-dev liblzf-dev

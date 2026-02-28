@@ -27,9 +27,12 @@ class Project extends Model
         'palette_id',
     ];
 
+    /**
+     * @return Attribute<string, string>
+     */
     public function imageUrl(): Attribute
     {
-        return Attribute::get(fn() => Storage::url($this->image));
+        return Attribute::get(fn () => Storage::url($this->image));
     }
 
     /**
